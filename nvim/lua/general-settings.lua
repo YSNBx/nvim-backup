@@ -5,7 +5,8 @@ vim.o.shiftwidth = 2
 vim.g.mapleader = " "
 vim.opt.clipboard='unnamedplus'
 vim.opt.incsearch = true
-vim.o.guicursor = "a:blinkon900"
+vim.o.guicursor = "n-v-c:blinkon600,i:ver25-blinkon600"
+vim.opt.termguicolors = true
 
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', {})
 vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', {})

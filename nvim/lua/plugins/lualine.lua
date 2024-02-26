@@ -12,7 +12,7 @@ return {
 
 		lualine.setup({
 			options = {
-				theme = "gruvbox_light",
+				theme = "onenord",
 			},
 			sections = {
 				lualine_a = {'mode'},

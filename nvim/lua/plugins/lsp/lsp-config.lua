@@ -8,9 +8,7 @@ return {
 	config = function()
 		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
 		local keymap = vim.keymap
-
 		local opts = { noremap = true, silent = true }
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
@@ -47,7 +45,6 @@ return {
 
 			opts.desc = "Show signature help"
 			keymap.set("n", "<C-p>", vim.lsp.buf.signature_help, opts)
-
 		end
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -75,5 +72,26 @@ return {
 				},
 			},
 		})
-	end,	
+
+		lspconfig["rust_analyzer"].setup ({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				["rust_analyzer"] = {
+					cargo = {
+						allFeatures = true,
+					},
+					checkOnSave = {
+						command = "clippy"
+					},
+					diagnostics = {
+						enable = true,
+						experimental = {
+							enable = true,
+						},
+					},
+				},
+			},
+		})
+	end,
 }
