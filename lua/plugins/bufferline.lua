@@ -16,7 +16,6 @@ return {
 						highlight = "Directory",
 						-- separator = true,
 					},
-
 				},
 				hover = {
 					enabled = true,
@@ -29,5 +28,7 @@ return {
 				},
 			},
 		}
+		vim.api.nvim_set_keymap('n', '<A-h>', '<Cmd>BufferLineCyclePrev<CR>', { noremap = true, silent = true, desc = "Previous Buffer" })
+		vim.api.nvim_set_keymap('n', '<A-l>', '<Cmd>BufferLineCycleNext<CR>', { noremap = true, silent = true, desc = "Next Buffer" })
 	end
 }
