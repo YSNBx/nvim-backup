@@ -4,11 +4,12 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
-		"MunifTanjim/nui.nvim"
+		"MunifTanjim/nui.nvim",
+		"stevearc/dressing.nvim"
 	},
 	config = function()
-		vim.keymap.set('n', '<leader>ft', ':Neotree toggle left<CR>', {})
-		vim.keymap.set('n', '<leader>of', ':Neotree reveal<CR>', {})
+		vim.keymap.set('n', '<leader>ee', ':Neotree action=show position=left toggle=true<CR>', {})
+		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', {})
 
 		require("neo-tree").setup({
 			filesystem = {
@@ -30,5 +31,5 @@ return {
 			},
 			follow_current_file = true,
 		})
-	end,
+	end
 }

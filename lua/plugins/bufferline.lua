@@ -30,5 +30,6 @@ return {
 		}
 		vim.api.nvim_set_keymap('n', '<A-h>', '<Cmd>BufferLineCyclePrev<CR>', { noremap = true, silent = true, desc = "Previous Buffer" })
 		vim.api.nvim_set_keymap('n', '<A-l>', '<Cmd>BufferLineCycleNext<CR>', { noremap = true, silent = true, desc = "Next Buffer" })
+		vim.api.nvim_set_keymap('n', '<leader>c', ':bdelete<CR>', { noremap = true, silent = true, desc = "Close Buffer" })
 	end
 }

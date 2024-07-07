@@ -2,8 +2,11 @@ return {
 	'nvim-telescope/telescope.nvim',
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"jonarrien/telescope-cmdline.nvim"
+		"jonarrien/telescope-cmdline.nvim",
+		"nvim-tree/nvim-web-devicons",
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
+	event = "VimEnter",
 	keys = {
 		{ ":", "<Cmd>Telescope cmdline<CR>", desc = "Cmdline" },
 	},
@@ -20,31 +23,37 @@ return {
 			'--glob', '!.var*'
 		}
 
-		vim.keymap.set('n', '<leader>ff', function()
+		local function map_with_desc(mode, lhs, rhs, desc)
+			local final_opts = vim.tbl_extend("force", opts, { desc = desc })
+			vim.keymap.set(mode, lhs, rhs, final_opts)
+		end
+
+		map_with_desc('n', '<leader>ff', function()
 			builtin.find_files({
 				find_command = command_table
 			})
-		end, opts)
+		end, "Find Files")
 
-		vim.keymap.set('n', '<leader>bf', function()
+		map_with_desc('n', '<leader>fb', function()
 			builtin.current_buffer_fuzzy_find()
-		end, opts)
-		
-		vim.keymap.set('n', '<leader>lg', function()
+		end, "Buffer Fuzzy Find")
+
+		map_with_desc('n', '<leader>fg', function()
 			builtin.live_grep({
 				additional_args = function()
 					return {
-						'--hidden',
 						'--glob', '!.git/*',
+						'--hidden',
 						'--glob', '!.local/share/*',
 						'--glob', '!.cache',
 						'--glob', '!.var*'
 					}
 				end
 			})
-		end, opts)
+		end, "Live Grep")
 
-		require("telescope").load_extension("cmdline")
-
+		local telescope = require("telescope")
+		telescope.load_extension("fzf")
+		telescope.load_extension("cmdline")
 	end
 }
