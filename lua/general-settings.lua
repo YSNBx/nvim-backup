@@ -16,3 +16,12 @@ vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', {})
 vim.keymap.set('v', '<A-j>', ':m \'>+1<CR>gv=gv', {})
 vim.keymap.set('v', '<A-k>', ':m \'<-2<CR>gv=gv', {})
 vim.keymap.set({'n', 'v'}, '<A-d>', '"_dd', { noremap = true, silent = true })
+
+-- New Line in Insert Mode
+vim.keymap.set('i', '<C-j>', '<Esc>o', {noremap = true, silent = true })
+
+-- Duplicate the current line in normal mode
+vim.keymap.set('n', '<C-d>', 'Yp', { noremap = true, silent = true })
+
+-- Duplicate the current line in insert mode
+vim.keymap.set('i', '<C-d>', '<Esc>Ypi', { noremap = true, silent = true })
