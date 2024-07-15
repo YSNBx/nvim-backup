@@ -25,3 +25,14 @@ vim.keymap.set('n', '<C-d>', 'Yp', { noremap = true, silent = true })
 
 -- Duplicate the current line in insert mode
 vim.keymap.set('i', '<C-d>', '<Esc>Ypi', { noremap = true, silent = true })
+
+local group = vim.api.nvim_create_augroup("AutosaveHtmlCss", { clear = true })
+vim.api.nvim_create_autocmd("InsertLeave", {
+	group = group,
+	callback = function()
+		local ft = vim.bo.filetype
+		if ft == "html" or ft == "css" then
+			vim.cmd("silent! write")
+		end
+	end
+})

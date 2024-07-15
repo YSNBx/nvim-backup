@@ -82,6 +82,12 @@ return {
 			}
 		})
 
+		lspconfig["html"].setup({
+			capabilities = capabilities,
+			filetypes = { "html" },
+			cmd = { "/usr/local/bin/vscode-html-language-server", "--stdio" }
+		})
+
 		lspconfig["rust_analyzer"].setup ({
 			capabilities = capabilities,
 			settings = {
