@@ -12,6 +12,15 @@ return {
 		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', {})
 
 		require("neo-tree").setup({
+			file_size = {
+				enabled = false
+			},
+			type = {
+				enabled = false
+			},
+			last_modified = {
+				enabled = false,
+			},
 			filesystem = {
 				filtered_items = {
 					visible = true,
