@@ -24,9 +24,10 @@ return {
 				"lua_ls",
 				"html",
 				"cssls",
-				"tsserver",
+				"ts_ls",
 				"prismals",
-				"rust_analyzer"
+				"rust_analyzer",
+				"gopls"
 			},
 			automatic_installation = true,
 		})

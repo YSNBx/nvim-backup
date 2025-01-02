@@ -26,6 +26,9 @@ vim.keymap.set('n', '<C-d>', 'Yp', { noremap = true, silent = true })
 -- Duplicate the current line in insert mode
 vim.keymap.set('i', '<C-d>', '<Esc>Ypi', { noremap = true, silent = true })
 
+-- Paste in normal mode
+vim.keymap.set('i', '<A-P>', '<C-r>', { noremap = true, silent = true })
+
 local group = vim.api.nvim_create_augroup("AutosaveHtmlCss", { clear = true })
 vim.api.nvim_create_autocmd("InsertLeave", {
 	group = group,
