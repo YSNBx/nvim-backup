@@ -12,11 +12,12 @@ return {
 			indent = { enable = true },
 			autotag = { enable = true },
 
+
 			ensure_installed = {
 				"bash",
 				"vim",
 				"vimdoc",
-				"lua",
+				"lua", 
 				"json",
 				"yaml",
 				"html",

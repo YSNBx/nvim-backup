@@ -7,7 +7,7 @@ return {
 	config = function()
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
-		local mason_tool_installer = require("mason-tool-installer")
+		-- local mason_tool_installer = require("mason-tool-installer")
 
 		mason.setup({
 			ui = {
@@ -27,15 +27,16 @@ return {
 				"ts_ls",
 				"prismals",
 				"rust_analyzer",
-				"gopls"
+				"gopls",
 			},
 			automatic_installation = true,
 		})
 
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"eslint_d"
-			}
-		})
+		-- mason_tool_installer.setup({
+		-- 	ensure_installed = {
+		-- 		'java-debug-adapter',
+		-- 		'java-test'
+		-- 	}
+		-- })
 	end
 }
