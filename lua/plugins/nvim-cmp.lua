@@ -55,7 +55,7 @@ return {
 					border = "rounded",
 					winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
 				},
-			}
+			},
 		})
 	end,
 }

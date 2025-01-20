@@ -2,16 +2,14 @@ return {
 	'nvim-telescope/telescope.nvim',
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"jonarrien/telescope-cmdline.nvim",
+		-- "jonarrien/telescope-cmdline.nvim",
 		"nvim-tree/nvim-web-devicons",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
 	event = "VimEnter",
-	keys = {
-		{ ":", "<Cmd>Telescope cmdline<CR>", desc = "Cmdline" },
-	},
 	config = function()
 		local opts = { noremap = true, silent = true }
+		local telescope = require("telescope")
 		local builtin = require("telescope.builtin")
 		local command_table = {
 			'rg',
@@ -52,8 +50,6 @@ return {
 			})
 		end, "Live Grep")
 
-		local telescope = require("telescope")
 		telescope.load_extension("fzf")
-		telescope.load_extension("cmdline")
 	end
 }

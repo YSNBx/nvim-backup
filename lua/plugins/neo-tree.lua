@@ -35,9 +35,6 @@ return {
 					}
 				},
 			},
-			window = {
-				auto_expand_width = true,
-			},
 			follow_current_file = true,
 		})
 	end
