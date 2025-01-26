@@ -4,13 +4,30 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
+		{
+			"folke/lazydev.nvim",
+			ft = "lua", -- only load on lua files
+			opts = {
+				library = {
+					-- See the configuration section for more details
+					-- Load luvit types when the `vim.uv` word is found
+					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				},
+			},
+		}
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
 		local mason_lspconfig = require("mason-lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
+
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local function extend_capabilities()
+			local extended_capabilities = vim.deepcopy(capabilities)
+			extended_capabilities.textDocument.completion.completionItem.snippetSupport = true
+			return extended_capabilities
+		end
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -52,7 +69,6 @@ return {
 			end
 		})
 
-		local capabilities = cmp_nvim_lsp.default_capabilities()
 
 		local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " "}
 		for type, icon in pairs(signs) do
@@ -68,24 +84,25 @@ return {
 			end
 		})
 
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
-					},
-					completion = {
-						callSnippet = "Replace"
-					}
-				}
-			}
+		lspconfig.html.setup({
+			capabilities = extend_capabilities(),
+			filetypes = { "html" },
+			init_options = {
+				configurationSection = { "html", "css", "javascript" },
+				embeddedLanguages = {
+					css = true,
+					javascript = true,
+				},
+				provideFormatter = true,
+			},
+			cmd = { "/usr/local/bin/vscode-html-language-server", "--stdio" }
 		})
 
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			filetypes = { "html" },
-			cmd = { "/usr/local/bin/vscode-html-language-server", "--stdio" }
+		lspconfig.cssls.setup({
+			capabilities = extend_capabilities(),
+			filetypes = { "css", "scss", "less" },
+			init_options = { provideFormatter = true },
+			cmd = { "/usr/local/bin/vscode-css-language-server", "--stdio" }
 		})
 
 		lspconfig["rust_analyzer"].setup ({

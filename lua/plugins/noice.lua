@@ -2,26 +2,6 @@ return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	opts = {
-		cmdline = {
-			enabled = true,
-			format = {
-				conceal = false;
-			}
-		},
-		routes = {
-			{
-				filter = {
-					event = "msg_show",
-					any = {
-						{ find = "%d+L, %d+B" },
-						{ find = "; after #%d+" },
-						{ find = "; before #%d+" },
-						{ find = "fewer lines" },
-					},
-				},
-				view = "mini",
-			},
-		},
 		lsp = {
 			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 			override = {
@@ -37,13 +17,13 @@ return {
 			inc_rename = false, -- enables an input dialog for inc-rename.nvim
 			lsp_doc_border = true, -- add a border to hover docs and signature help
 		},
-		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
-		},
+	},
+	dependencies = {
+		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+		"MunifTanjim/nui.nvim",
+		-- OPTIONAL:
+		--   `nvim-notify` is only needed, if you want to use the notification view.
+		--   If not available, we use `mini` as the fallback
+		"rcarriga/nvim-notify",
 	}
 }
