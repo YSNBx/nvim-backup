@@ -34,21 +34,6 @@ return {
 			callback = function(ev)
 				local opts = { buffer = ev.buf, silent = true }
 
-				opts.desc = "Show LSP references"
-				keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
-
-				opts.desc = "Go to declaration"
-				keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-
-				opts.desc = "Show LSP definitions"
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-
-				opts.desc = "Show LSP implementations"
-				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-
-				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-
 				opts.desc = "See available code actions"
 				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
@@ -65,10 +50,17 @@ return {
 				keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
 				opts.desc = "Show signature help"
-				keymap.set("n", "<C-p>", vim.lsp.buf.signature_help, opts)
+				keymap.set("n", "Kp", vim.lsp.buf.signature_help, opts)
 			end
 		})
 
+		vim.diagnostic.config({
+			virtual_text = false,
+			float = {
+				border = "rounded",
+				source = "if_many",
+			}
+		})
 
 		local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " "}
 		for type, icon in pairs(signs) do

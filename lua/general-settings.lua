@@ -7,6 +7,7 @@ vim.opt.clipboard='unnamedplus'
 vim.opt.incsearch = true
 vim.o.guicursor = "n-v-c:blinkon600,i:ver25-blinkon600"
 vim.opt.termguicolors = true
+vim.opt.autochdir = true
 vim.diagnostic.config({
 	update_in_insert = true,
 })

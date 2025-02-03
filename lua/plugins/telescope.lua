@@ -1,8 +1,16 @@
+local function get_root()
+	local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+	if git_root and vim.fn.isdirectory(git_root) == 1 then
+		return git_root
+	else
+		return vim.fn.getcwd()
+	end
+end
+
 return {
 	'nvim-telescope/telescope.nvim',
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		-- "jonarrien/telescope-cmdline.nvim",
 		"nvim-tree/nvim-web-devicons",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
@@ -11,6 +19,7 @@ return {
 		local opts = { noremap = true, silent = true }
 		local telescope = require("telescope")
 		local builtin = require("telescope.builtin")
+
 		local command_table = {
 			'rg',
 			'--files',
@@ -27,14 +36,16 @@ return {
 		end
 
 		map_with_desc('n', '<leader>ff', function()
-			builtin.find_files({
-				find_command = command_table
-			})
-		end, "Find Files")
+			builtin.find_files({ cwd = get_root() })
+		end, "Find Files in Git Root")
 
-		map_with_desc('n', '<leader>fb', function()
-			builtin.current_buffer_fuzzy_find()
+		map_with_desc('n', '<leader>fs', function()
+			builtin.current_buffer_fuzzy_find({ cwd = get_root() })
 		end, "Buffer Fuzzy Find")
+
+		map_with_desc('n', '<leader>fb', function ()
+			builtin.buffers({ sort_mru = true })
+		end)
 
 		map_with_desc('n', '<leader>fg', function()
 			builtin.live_grep({
