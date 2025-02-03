@@ -87,14 +87,14 @@ return {
 				},
 				provideFormatter = true,
 			},
-			cmd = { "/usr/local/bin/vscode-html-language-server", "--stdio" }
+			cmd = { "/usr/bin/vscode-html-language-server", "--stdio" }
 		})
 
 		lspconfig.cssls.setup({
 			capabilities = extend_capabilities(),
 			filetypes = { "css", "scss", "less" },
 			init_options = { provideFormatter = true },
-			cmd = { "/usr/local/bin/vscode-css-language-server", "--stdio" }
+			cmd = { "/usr/bin/vscode-css-language-server", "--stdio" }
 		})
 
 		lspconfig["rust_analyzer"].setup ({
