@@ -3,8 +3,8 @@ return {
 	opts = {}, -- for default options, refer to the configuration section for custom setup.
 	cmd = "Trouble",
 	keys = {
-		{ "<leader>xx", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>", desc = "Trouble Diagnostics Current Buf" },
-		{	"<leader>xX",	"<cmd>Trouble diagnostics toggle<cr>", desc = "Trouble Diagnostics Project" },
-		{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+		{ "<leader>xx", "<cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>", desc = "Diagnostics Current Buf" },
+		{	"<leader>xX",	"<cmd>Trouble diagnostics toggle focus=true<CR>", desc = "Diagnostics Project" },
+		{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols" },
 	},
 }

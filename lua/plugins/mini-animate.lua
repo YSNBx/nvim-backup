@@ -1,7 +1,12 @@
 return {
 	'echasnovski/mini.animate',
 	version = false,
-	config = function()
-		require("mini.animate").setup()
-	end
+	opts = {
+		cursor = { enable = false },
+		open = { enable = false },
+		close = { enable = false }
+	},
+	config = function(_, opts)
+		require("mini.animate").setup(opts)
+	end,
 }
