@@ -1,6 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
-	event = "InsertEnter",
+	event = { "InsertEnter" },
 	dependencies = {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
@@ -8,11 +8,12 @@ return {
 			"L3MON4D3/LuaSnip",
 			version = "v2.*",
 			build = "make install jsregexp",
-			dependencies = { "rafamadriz/friendly-snippets" },
 		},
+		"rafamadriz/friendly-snippets" ,
 		"saadparwaiz1/cmp_luasnip",
-		"onsails/lspkind.nvim"
+		"onsails/lspkind.nvim",
 	},
+
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
@@ -20,14 +21,13 @@ return {
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
-			completion = {
-				completeopt = "menu,menuone,preview",
-			},
+			completion = { completeopt = "menu,menuone,preview" },
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
+
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(),
 				["<C-j>"] = cmp.mapping.select_next_item(),
@@ -41,7 +41,14 @@ return {
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
-				{ name = "buffer" },
+				{
+					name = "buffer",
+					option = {
+						get_bufnrs = function ()
+							return vim.api.nvim_list_bufs()
+						end
+					}
+				},
 				{ name = "path" },
 			}),
 			formatting = {

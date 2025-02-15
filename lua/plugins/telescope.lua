@@ -40,7 +40,7 @@ return {
 		end, "Find Files in Git Root")
 
 		map_with_desc('n', '<leader>fs', function()
-			builtin.current_buffer_fuzzy_find({ cwd = get_root() })
+			builtin.current_buffer_fuzzy_find({})
 		end, "Buffer Fuzzy Find")
 
 		map_with_desc('n', '<leader>fb', function ()
@@ -49,6 +49,7 @@ return {
 
 		map_with_desc('n', '<leader>fg', function()
 			builtin.live_grep({
+				cwd = get_root(),
 				additional_args = function()
 					return {
 						'--glob', '!.git/*',

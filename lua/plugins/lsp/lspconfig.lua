@@ -17,37 +17,19 @@ return {
 		}
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
 		local mason_lspconfig = require("mason-lspconfig")
+		local lspconfig = require("lspconfig")
+		local util = require('lspconfig.util')
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
-		local function extend_capabilities()
-			local extended_capabilities = vim.deepcopy(capabilities)
-			extended_capabilities.textDocument.completion.completionItem.snippetSupport = true
-			return extended_capabilities
-		end
+		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
 				local opts = { buffer = ev.buf, silent = true }
-
-				-- opts.desc = "Show LSP references"
-				-- keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
-				--
-				-- opts.desc = "Go to declaration"
-				-- keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-				--
-				-- opts.desc = "Show LSP definitions"
-				-- keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-				--
-				-- opts.desc = "Show LSP implementations"
-				-- keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-				--
-				-- opts.desc = "Show LSP type definitions"
-				-- keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
 				opts.desc = "See available code actions"
 				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -69,14 +51,6 @@ return {
 			end
 		})
 
-		vim.diagnostic.config({
-			virtual_text = false,
-			float = {
-				border = "rounded",
-				source = "if_many",
-			}
-		})
-
 		local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " "}
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
@@ -85,14 +59,16 @@ return {
 
 		mason_lspconfig.setup_handlers({
 			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities
-				})
+				if server_name ~= "jdtls" then
+					lspconfig[server_name].setup({
+						capabilities = capabilities
+					})
+				end
 			end
 		})
 
 		lspconfig.html.setup({
-			capabilities = extend_capabilities(),
+			capabilities = capabilities,
 			filetypes = { "html" },
 			init_options = {
 				configurationSection = { "html", "css", "javascript" },
@@ -106,11 +82,26 @@ return {
 		})
 
 		lspconfig.cssls.setup({
-			capabilities = extend_capabilities(),
-			filetypes = { "css", "scss", "less" },
+			capabilities = capabilities,
 			init_options = { provideFormatter = true },
-			cmd = { "/usr/bin/vscode-css-language-server", "--stdio" }
+			cmd = { "/usr/bin/vscode-css-language-server", "--stdio" },
+			root_dir = util.root_pattern("package.json", ".git"),
+			single_file_support = true,
 		})
+
+		lspconfig.ts_ls.setup ({
+			capabilities = capabilities,
+			cmd = { "typescript-language-server", "--stdio" },
+			filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" },
+			settings = {
+				javascript = {
+					checkJs = true,
+					validate = true,
+				}
+			}
+		})
+
+		-- lspconfig.jdtls.setup({})
 
 		lspconfig["rust_analyzer"].setup ({
 			capabilities = capabilities,

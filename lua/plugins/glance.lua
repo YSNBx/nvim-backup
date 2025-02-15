@@ -12,9 +12,12 @@ return {
 				["<esc>"] = "close",
 			},
 		})
-		
+
 		local keymap = vim.keymap.set
 		local opts = { noremap = true, silent = true }
 		keymap('n', 'gR', '<CMD>Glance references<CR>', opts)
+		keymap('n', 'gD', '<CMD>Glance definitions<CR>', opts)
+		keymap('n', 'gT', '<CMD>Glance type_definitions<CR>', opts)
+		keymap('n', 'gI', '<CMD>Glance implementations<CR>', opts)
 	end
 }

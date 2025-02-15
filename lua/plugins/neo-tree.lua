@@ -8,14 +8,12 @@ return {
 		"stevearc/dressing.nvim"
 	},
 	config = function()
-		vim.keymap.set('n', '<leader>ee', ':Neotree action=show position=left toggle=true<CR>', {})
-		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', {})
-
 		require("neo-tree").setup({
 			file_size = { enabled = false },
 			type = { enabled = false },
 			last_modified = { enabled = false },
 			filesystem = {
+				respect_git_root = true,
 				filtered_items = {
 					visible = true,
 					hide_dotfiles = false,
@@ -30,8 +28,8 @@ return {
 				},
 				bind_to_cwd = true,
 				cwd_traget = {
-					sidebar = "tab",
-					current = "window",
+					sidebar = "global",
+					current = "global",
 				},
 				follow_current_file = {
 					enabled = true,
@@ -41,16 +39,18 @@ return {
 					mappings = {
 						["/"] = "noop",
 						["\\"] = "fuzzy_finder",
-					}
-				}
+					},
+				},
 			},
 			buffers = {
 				bind_to_cwd = true,
-				follow_current_file = {
-					enabled = true,
-					leave_dirs_open = true,
+				cwd_traget = {
+					sidebar = "global",
+					current = "global",
 				},
 			},
 		})
+		vim.keymap.set('n', '<leader>ee', ':Neotree action=show position=left toggle=true<CR>', {})
+		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', {})
 	end
 }

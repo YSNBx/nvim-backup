@@ -4,11 +4,28 @@ function _G.closeBuffer(bufnr)
 	require("bufferline.ui").refresh()
 end
 
+function _G.closeAllBuffersExceptCurrent()
+	local current_buf = vim.api.nvim_get_current_buf()
+	local buffers = vim.api.nvim_list_bufs()
+
+	for _, bufnr in ipairs(buffers) do
+		if vim.api.nvim_buf_is_valid(bufnr) and bufnr ~= current_buf then
+			local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+			local buf_name = vim.api.nvim_buf_get_name(bufnr)
+
+			if buf_ft ~= "neo-tree" then
+				require("mini.bufremove").delete(bufnr, buf_name == "" or buf_name == nil)
+			end
+		end
+	end
+end
+
 local function set_keymaps()
 	local keymap = vim.api.nvim_set_keymap
 	keymap('n', '<A-h>', '<Cmd>BufferLineCyclePrev<CR>', { noremap = true, silent = true, desc = "Previous Buffer" })
 	keymap('n', '<A-l>', '<Cmd>BufferLineCycleNext<CR>', { noremap = true, silent = true, desc = "Next Buffer" })
 	keymap('n', '<leader>cb', '<Cmd>lua closeBuffer()<CR>', { noremap = true, silent = true, desc = "Close Buffer" })
+	keymap('n', '<leader>ce', '<Cmd>lua closeAllBuffersExceptCurrent()<CR>', { noremap = true, silent = true, desc = "Close All Except Current Buffer" })
 end
 
 local function generate_highlighting(bg_color, diagnostic_fg)
@@ -31,7 +48,7 @@ local function generate_highlighting(bg_color, diagnostic_fg)
 				italic = true
 			}
 		end
-end
+	end
 
 	highlights.modified_selected = { bg = bg_color }
 	highlights.buffer_selected = { bg = bg_color, bold = false, italic = false }

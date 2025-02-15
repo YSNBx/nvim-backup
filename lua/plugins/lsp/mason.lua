@@ -1,15 +1,15 @@
 return {
 	"williamboman/mason.nvim",
+	lazy = false,
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
-	config = function()
+	config = function(_, opts)
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
-		-- local mason_tool_installer = require("mason-tool-installer")
 
-		mason.setup({
+		local conf = vim.tbl_deep_extend("keep", opts or {}, {
 			ui = {
 				icons = {
 					package_installed = "✓",
@@ -19,24 +19,19 @@ return {
 			}
 		})
 
+		mason.setup(conf)
+
 		mason_lspconfig.setup({
 			ensure_installed = {
 				"lua_ls",
 				"html",
 				"cssls",
 				"ts_ls",
-				"prismals",
 				"rust_analyzer",
 				"gopls",
+				-- "jdtls", -- Java LSP
 			},
 			automatic_installation = true,
 		})
-
-		-- mason_tool_installer.setup({
-		-- 	ensure_installed = {
-		-- 		'java-debug-adapter',
-		-- 		'java-test'
-		-- 	}
-		-- })
 	end
 }
