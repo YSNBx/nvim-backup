@@ -13,6 +13,7 @@ return {
 			type = { enabled = false },
 			last_modified = { enabled = false },
 			filesystem = {
+				use_libuv_file_watcher = true,
 				respect_git_root = true,
 				filtered_items = {
 					visible = true,
