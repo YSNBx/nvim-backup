@@ -20,12 +20,12 @@ return {
 			}
 		})
 		local keymap = vim.keymap.set
-		keymap('n', '<leader>tr', ':lua require("neotest").run.run()<CR>', vim.g.opts)
-		keymap('n', '<leader>ts', ':lua require("neotest").run.stop()<CR>', vim.g.opts)
-		keymap('n', '<leader>to', ':lua require("neotest").output.open()<CR>', vim.g.opts)
-		keymap('n', '<leader>tO', ':lua require("neotest").output.open({ enter = true })<CR>', vim.g.opts)
-		keymap('n', '<leader>tS', ':lua require("neotest").summary.toggle()<CR>', vim.g.opts)
-		keymap('n', '<leader>tf', ':lua require("neotest").run.run({ vim.fn.expand("%") })<CR>', vim.g.opts)
+		keymap('n', '<leader>tr', '<cmd>lua require("neotest").run.run()', vim.g.opts)
+		keymap('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>', vim.g.opts)
+		keymap('n', '<leader>to', '<cmd>lua require("neotest").output.open({ last_run = true })<CR>', vim.g.opts)
+		keymap('n', '<leader>tO', '<cmd>lua require("neotest").output.open({ enter = true })<CR>', vim.g.opts)
+		keymap('n', '<leader>tS', '<cmd>lua require("neotest").summary.toggle()<CR>', vim.g.opts)
+		keymap('n', '<leader>tf', '<cmd>lua require("neotest").run.run({ vim.fn.expand("%") })<CR>', vim.g.opts)
 
 		vim.defer_fn(function()
 			vim.api.nvim_set_hl(0, "NeoTestPassed", { fg = '#4E9B4F' })

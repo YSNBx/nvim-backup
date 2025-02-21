@@ -39,13 +39,13 @@ return {
 			builtin.find_files({ cwd = get_root() })
 		end, "Find Files in Git Root")
 
-		map_with_desc('n', '<leader>fs', function()
+		map_with_desc({'n', 'v'}, '<leader>fb', function()
 			builtin.current_buffer_fuzzy_find({})
 		end, "Buffer Fuzzy Find")
 
-		map_with_desc('n', '<leader>fb', function ()
-			builtin.buffers({ sort_mru = true })
-		end)
+		-- map_with_desc('n', '<leader>fb', function ()
+		-- 	builtin.buffers({ sort_mru = true })
+		-- end)
 
 		map_with_desc('n', '<leader>fg', function()
 			builtin.live_grep({

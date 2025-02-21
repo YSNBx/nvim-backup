@@ -12,10 +12,7 @@ return {
 			local ui = require("dapui")
 
 			require("dapui").setup()
-			require("nvim-dap-virtual-text").setup ({
-				all_references = true,
-				all_frames = true,
-			})
+			require("nvim-dap-virtual-text").setup()
 
 			for _, language in ipairs({ "javascript", "typescript" }) do
 				dap.adapters["pwa-node"] = {
@@ -25,7 +22,13 @@ return {
 					executable = {
 						command = "node",
 						args = { os.getenv("HOME") .. "/.local/share/nvim/js-debug/src/dapDebugServer.js", "${port}" },
-					}
+					},
+				}
+
+				dap.adapters["firefox"] = {
+					type = "executable",
+					command = "node",
+					args = { os.getenv("HOME") .. "/.local/share/nvim/firefox-debug-adapter/dist/adapter.bundle.js" },
 				}
 
 				dap.configurations[language] = {
@@ -36,9 +39,26 @@ return {
 						program = "${file}",
 						cwd = vim.fn.getcwd(),
 					},
+					{
+						name = "Attach Firefox",
+						type = "firefox",
+						request = "attach",
+						reAttach = true,
+						host = "localhost",
+						-- port = "6000",
+						url = "http://127.0.0.1:8080/index.html",
+						webRoot = vim.fn.getcwd(),
+					},
+					{
+						name = "Launch Firefox",
+						type = "firefox",
+						request = "launch",
+						reAttach = true,
+						url = "http://127.0.0.1:8080/index.html",
+						webRoot = vim.fn.getcwd(),
+					},
 				}
 			end
-
 
 			local function close_neotree()
 				vim.cmd("Neotree close")
@@ -58,9 +78,9 @@ return {
 			keymap("n", "<F9>", dap.continue)
 			keymap("n", "<F1>", dap.restart)
 			keymap("n", "<F2>", dap.terminate)
-			keymap({ "n", "v" }, "<leader>dE", function() require("dapui").eval(nil, { enter = true }) end)
 			keymap("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, { desc = "Debug Nearest" })
 
+			keymap({ "n", "v" }, "<leader>dE", function() require("dapui").eval(nil, { enter = true }) end)
 			keymap("n", "<leader>de", function()
 				vim.ui.input({ prompt = "Evaluate " }, function(expr)
 					if expr and expr ~= "" then
