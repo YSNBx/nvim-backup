@@ -69,7 +69,7 @@ return {
 
 		lspconfig.html.setup({
 			capabilities = capabilities,
-			filetypes = { "html" },
+			filetypes = { "html", "typescriptreact", "javascriptreact" },
 			init_options = {
 				configurationSection = { "html", "css", "javascript" },
 				embeddedLanguages = {
@@ -101,7 +101,58 @@ return {
 			}
 		})
 
-		-- lspconfig.jdtls.setup({})
+		lspconfig.tailwindcss.setup({
+			capabilities = capabilities,
+			cmd = { "tailwindcss-language-server", "--stdio" },
+			filetypes = {
+				"html", "css", "scss", "javascript", "javascriptreact",
+				"typescript", "typescriptreact", "vue", "svelte"
+			},
+			settings = {
+				tailwindCSS = {
+					validate = true,
+					lint = {
+						cssConflict = "warning",
+						invalidApply = "error",
+						invalidScreen = "error",
+						invalidVariant = "error",
+						invalidTailwindDirective = "error",
+						recommendedVariantOrder = "warning",
+					},
+					classAttributes = {
+						"class", "className", "class:list", "classList", "ngClass"
+					},
+					includeLanguages = {
+						typescript = "javascript",
+						typescriptreact = "javascript",
+					},
+				},
+			},
+			before_init = function(_, config)
+				if not config.settings then config.settings = {} end
+				if not config.settings.editor then config.settings.editor = {} end
+				config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
+			end,
+			root_dir = require("lspconfig.util").root_pattern(
+				"tailwind.config.js",
+				"tailwind.config.cjs",
+				"tailwind.config.mjs",
+				"tailwind.config.ts",
+				"postcss.config.js",
+				"package.json",
+				".git"
+			),
+		})
+
+		lspconfig.emmet_language_server.setup({
+			capabilities = capabilities,
+			cmd = { "emmet-language-server", "--stdio" },
+			filetypes = {
+				"html", "css", "scss", "javascriptreact", "typescriptreact",
+				"sass", "less", "pug", "eruby", "htmldjango", "htmlangular"
+			},
+			root_dir = require("lspconfig.util").root_pattern(".git"),
+		})
 
 		lspconfig["rust_analyzer"].setup ({
 			capabilities = capabilities,

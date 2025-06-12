@@ -20,7 +20,7 @@ return {
 			}
 		})
 		local keymap = vim.keymap.set
-		keymap('n', '<leader>tr', '<cmd>lua require("neotest").run.run()', vim.g.opts)
+		keymap('n', '<leader>tr', '<cmd>lua require("neotest").run.run()<CR>', vim.g.opts)
 		keymap('n', '<leader>ts', '<cmd>lua require("neotest").run.stop()<CR>', vim.g.opts)
 		keymap('n', '<leader>to', '<cmd>lua require("neotest").output.open({ last_run = true })<CR>', vim.g.opts)
 		keymap('n', '<leader>tO', '<cmd>lua require("neotest").output.open({ enter = true })<CR>', vim.g.opts)

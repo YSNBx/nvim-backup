@@ -27,8 +27,10 @@ return {
 				"html",
 				"cssls",
 				"ts_ls",
+				"tailwindcss",
 				"rust_analyzer",
 				"gopls",
+				"pyright"
 				-- "jdtls", -- Java LSP
 			},
 			automatic_installation = true,

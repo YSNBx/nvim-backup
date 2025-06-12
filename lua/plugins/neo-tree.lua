@@ -27,7 +27,7 @@ return {
 						'.m2',
 					}
 				},
-				bind_to_cwd = true,
+				bind_to_cwd = false,
 				cwd_traget = {
 					sidebar = "global",
 					current = "global",
@@ -44,14 +44,14 @@ return {
 				},
 			},
 			buffers = {
-				bind_to_cwd = true,
+				bind_to_cwd = false,
 				cwd_traget = {
 					sidebar = "global",
 					current = "global",
 				},
 			},
 		})
-		vim.keymap.set('n', '<leader>ee', ':Neotree action=show position=left toggle=true<CR>', {})
-		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', {})
+		vim.keymap.set('n', '<leader>ee', ':Neotree action=show position=left toggle=true<CR>', vim.g.opts)
+		vim.keymap.set('n', '<leader>ef', ':Neotree reveal<CR>', vim.g.opts)
 	end
 }

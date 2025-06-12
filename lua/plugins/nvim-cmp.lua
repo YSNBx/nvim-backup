@@ -7,9 +7,10 @@ return {
 		{
 			"L3MON4D3/LuaSnip",
 			version = "v2.*",
+			lazy = false,
 			build = "make install jsregexp",
+			dependencies = { "rafamadriz/friendly-snippets" },
 		},
-		"rafamadriz/friendly-snippets" ,
 		"saadparwaiz1/cmp_luasnip",
 		"onsails/lspkind.nvim",
 	},
@@ -50,6 +51,7 @@ return {
 					}
 				},
 				{ name = "path" },
+				{ name = "neorg" },
 			}),
 			formatting = {
 				expandable_indicator = true,
