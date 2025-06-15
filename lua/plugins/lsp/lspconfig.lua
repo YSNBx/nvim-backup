@@ -51,15 +51,25 @@ return {
 			end
 		})
 
-		local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " "}
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = ""})
-		end
+		local diagnostic_signs = {
+			{ name = "DiagnosticSignError", text = " ", texthl = "DiagnosticSignError" },
+			{ name = "DiagnosticSignWarn",  text = " ", texthl = "DiagnosticSignWarn"  },
+			{ name = "DiagnosticSignHint",  text = "󰌵 ", texthl = "DiagnosticSignHint"  },
+			{ name = "DiagnosticSignInfo",  text = " ", texthl = "DiagnosticSignInfo"  },
+		}
+
+		vim.diagnostic.config({
+			signs = {
+				active = diagnostic_signs,
+			},
+			virtual_text = true,
+			underline = true,
+			update_in_insert = false,
+		})
 
 		mason_lspconfig.setup_handlers({
 			function(server_name)
-				if server_name ~= "jdtls" then
+				if server_name ~= "jdtls" and server_name ~= "rust_analyzer" then
 					lspconfig[server_name].setup({
 						capabilities = capabilities
 					})
@@ -154,22 +164,20 @@ return {
 			root_dir = require("lspconfig.util").root_pattern(".git"),
 		})
 
-		lspconfig["rust_analyzer"].setup ({
-			capabilities = capabilities,
-			settings = {
-				["rust_analyzer"] = {
-					cargo = {
-						allFeatures = true,
-					},
-					checkOnSave = {
-						command = "clippy"
-					},
-					diagnostics = {
-						enable = true,
-					},
-				},
-			},
-		})
+		-- lspconfig["rust_analyzer"].setup({
+		-- 	capabilities = capabilities,
+		-- 	settings = {
+		-- 		["rust-analyzer"] = {
+		-- 			cargo = { allFeatures = true },
+		-- 			checkOnSave = { command = "clippy" },
+		-- 			diagnostics = { enable = true },
+		-- 			completion = {
+		-- 				autoimport = { enable = true },
+		-- 				postfix    = { enable = true },
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
 
 		lspconfig["gopls"].setup {
 			capabilities = capabilities,

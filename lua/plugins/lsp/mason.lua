@@ -28,7 +28,7 @@ return {
 				"cssls",
 				"ts_ls",
 				"tailwindcss",
-				"rust_analyzer",
+				-- "rust_analyzer",
 				"gopls",
 				"pyright"
 				-- "jdtls", -- Java LSP
