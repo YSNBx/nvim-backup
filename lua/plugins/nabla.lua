@@ -2,7 +2,7 @@ return {
 	{
 		"williamboman/mason.nvim",
 		opts = {
-			ensure_installed = {}, -- Remove tree-sitter-cli from here
+			ensure_installed = {},
 		},
 	},
 
