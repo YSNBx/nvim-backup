@@ -32,7 +32,10 @@ return {
 				local opts = { buffer = ev.buf, silent = true }
 
 				opts.desc = "See available code actions"
-				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+				-- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+				keymap.set({ "n", "v" }, "<leader>ca", function()
+					require("tiny-code-action").code_action()
+				end, opts)
 
 				opts.desc = "Smart rename"
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
@@ -163,21 +166,6 @@ return {
 			},
 			root_dir = require("lspconfig.util").root_pattern(".git"),
 		})
-
-		-- lspconfig["rust_analyzer"].setup({
-		-- 	capabilities = capabilities,
-		-- 	settings = {
-		-- 		["rust-analyzer"] = {
-		-- 			cargo = { allFeatures = true },
-		-- 			checkOnSave = { command = "clippy" },
-		-- 			diagnostics = { enable = true },
-		-- 			completion = {
-		-- 				autoimport = { enable = true },
-		-- 				postfix    = { enable = true },
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
 
 		lspconfig["gopls"].setup {
 			capabilities = capabilities,

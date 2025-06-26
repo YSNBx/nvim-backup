@@ -1,6 +1,7 @@
 return {
   "mrcjkb/rustaceanvim",
   version = "^6",
+	lazy = false,
   dependencies = {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
@@ -19,7 +20,7 @@ return {
         settings = {
           ["rust-analyzer"] = {
             cargo     = { allFeatures = true },
-            checkOnSave = { command = "clippy" },
+            checkOnSave = true,
             inlayHints = {
               chainingHints    = { enable = true },
               parameterHints   = { enable = true },

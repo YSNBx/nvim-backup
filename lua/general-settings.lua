@@ -1,6 +1,5 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.opt.conceallevel = 3
 
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
@@ -9,6 +8,7 @@ vim.opt.linebreak = true
 vim.opt.textwidth = 100
 vim.opt.wrap = true
 vim.opt.formatoptions:append("t")
+vim.opt.conceallevel = 3
 
 vim.opt.termguicolors = true
 vim.o.guicursor = "n-v-c:blinkon600,i:ver25-blinkon600"
