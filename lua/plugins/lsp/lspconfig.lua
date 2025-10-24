@@ -17,12 +17,8 @@ return {
 		}
 	},
 	config = function()
-		local mason_lspconfig = require("mason-lspconfig")
-		local lspconfig = require("lspconfig")
 		local util = require('lspconfig.util')
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		local keymap = vim.keymap
-
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -30,9 +26,10 @@ return {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
 				local opts = { buffer = ev.buf, silent = true }
+				local keymap = vim.keymap
+				local snacks = require("snacks")
 
 				opts.desc = "See available code actions"
-				-- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 				keymap.set({ "n", "v" }, "<leader>ca", function()
 					require("tiny-code-action").code_action()
 				end, opts)
@@ -41,7 +38,7 @@ return {
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+				keymap.set("n", "<leader>D", function() snacks.picker.diagnostics_buffer() end, opts)
 
 				opts.desc = "Show line diagnostics"
 				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
@@ -70,31 +67,18 @@ return {
 			update_in_insert = false,
 		})
 
-		mason_lspconfig.setup_handlers({
-			function(server_name)
-				if server_name ~= "jdtls" and server_name ~= "rust_analyzer" then
-					lspconfig[server_name].setup({
-						capabilities = capabilities
-					})
-				end
-			end
-		})
-
-		lspconfig.html.setup({
+		vim.lsp.config("html", {
 			capabilities = capabilities,
 			filetypes = { "html", "typescriptreact", "javascriptreact" },
 			init_options = {
 				configurationSection = { "html", "css", "javascript" },
-				embeddedLanguages = {
-					css = true,
-					javascript = true,
-				},
+				embeddedLanguages = { css = true, javascript = true },
 				provideFormatter = true,
 			},
 			cmd = { "/usr/bin/vscode-html-language-server", "--stdio" }
 		})
 
-		lspconfig.cssls.setup({
+		vim.lsp.config("cssls", {
 			capabilities = capabilities,
 			init_options = { provideFormatter = true },
 			cmd = { "/usr/bin/vscode-css-language-server", "--stdio" },
@@ -102,19 +86,17 @@ return {
 			single_file_support = true,
 		})
 
-		lspconfig.ts_ls.setup ({
+		vim.lsp.config("ts_ls", {
 			capabilities = capabilities,
 			cmd = { "typescript-language-server", "--stdio" },
-			filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html" },
-			settings = {
-				javascript = {
-					checkJs = true,
-					validate = true,
-				}
-			}
+			filetypes = {
+				"javascript", "javascriptreact", "javascript.jsx",
+				"typescript", "typescriptreact", "typescript.tsx", "html"
+			},
+			settings = { javascript = { checkJs = true, validate = true } }
 		})
 
-		lspconfig.tailwindcss.setup({
+		vim.lsp.config("tailwindcss", {
 			capabilities = capabilities,
 			cmd = { "tailwindcss-language-server", "--stdio" },
 			filetypes = {
@@ -157,7 +139,7 @@ return {
 			),
 		})
 
-		lspconfig.emmet_language_server.setup({
+		vim.lsp.config("emmet_language_server", {
 			capabilities = capabilities,
 			cmd = { "emmet-language-server", "--stdio" },
 			filetypes = {
@@ -167,7 +149,7 @@ return {
 			root_dir = require("lspconfig.util").root_pattern(".git"),
 		})
 
-		lspconfig["gopls"].setup {
+		vim.lsp.config("gopls", {
 			capabilities = capabilities,
 			cmd = { "gopls" },
 			filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -177,10 +159,13 @@ return {
 					completeUnimported = true,
 					usePlaceholders = true,
 					analyses = {
-						unusuedparams = true,
+						unusedparams = true,
 					}
 				}
 			}
-		}
+		})
+
+
+		vim.lsp.enable({ "html", "cssls", "ts_ls", "tailwindcss", "emmet_language_server", "gopls"})
 	end,
 }

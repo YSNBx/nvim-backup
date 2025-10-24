@@ -28,12 +28,12 @@ return {
 					}
 				},
 				bind_to_cwd = false,
-				cwd_traget = {
+				cwd_target = {
 					sidebar = "global",
 					current = "global",
 				},
 				follow_current_file = {
-					enabled = true,
+					enabled = false,
 					leave_dirs_open = true,
 				},
 				window = {
@@ -45,7 +45,7 @@ return {
 			},
 			buffers = {
 				bind_to_cwd = false,
-				cwd_traget = {
+				cwd_target = {
 					sidebar = "global",
 					current = "global",
 				},

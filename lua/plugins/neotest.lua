@@ -28,7 +28,7 @@ return {
 		keymap('n', '<leader>tf', '<cmd>lua require("neotest").run.run({ vim.fn.expand("%") })<CR>', vim.g.opts)
 
 		vim.defer_fn(function()
-			vim.api.nvim_set_hl(0, "NeoTestPassed", { fg = '#4E9B4F' })
+			vim.api.nvim_set_hl(0, "NeotestPassed", { fg = '#4E9B4F' })
 			vim.api.nvim_set_hl(0, "NeotestFailed", { fg = "#b31a00" })
 			vim.api.nvim_set_hl(0, "NeotestRunning", { fg = "#e6b300" })
 			vim.api.nvim_set_hl(0, "NeotestSkipped", { fg = "#6690b6" })

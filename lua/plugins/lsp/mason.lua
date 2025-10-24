@@ -33,7 +33,6 @@ return {
 				"pyright"
 				-- "jdtls", -- Java LSP
 			},
-			automatic_installation = true,
 		})
 	end
 }
