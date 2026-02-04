@@ -30,7 +30,6 @@ return {
 				"tailwindcss",
 				-- "rust_analyzer",
 				"gopls",
-				"pyright"
 				-- "jdtls", -- Java LSP
 			},
 		})

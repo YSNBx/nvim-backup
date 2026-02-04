@@ -9,7 +9,11 @@ return {
 	},
 	config = function()
 		require("neo-tree").setup({
-			file_size = { enabled = false },
+			file_size = {
+				enabled = true,
+				width = 12,
+				required_width = 4,
+			},
 			type = { enabled = false },
 			last_modified = { enabled = false },
 			filesystem = {
@@ -37,6 +41,7 @@ return {
 					leave_dirs_open = true,
 				},
 				window = {
+					width = 24,
 					mappings = {
 						["/"] = "noop",
 						["\\"] = "fuzzy_finder",

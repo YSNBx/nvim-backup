@@ -19,7 +19,8 @@ return {
 	config = function()
 		local util = require('lspconfig.util')
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
+		capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -67,23 +68,54 @@ return {
 			update_in_insert = false,
 		})
 
+		vim.lsp.config("yamlls", {
+			root_dir = util.root_pattern(".git", "pom.xml", "build.gradle", "package.json", ".yamllint"),
+			settings = {
+				redhat = { telemetry = { enabled = false } },
+				yaml = {
+					format = { enable = true },
+					keyOrdering = false,
+					schemas = {
+						-- GitHub Actions example:
+						["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+						-- Spring Boot config (good enough for hints):
+						["https://json.schemastore.org/spring-boot-configuration-metadata.json"] = "application*.yml",
+					},
+				},
+			},
+		})
+
 		vim.lsp.config("html", {
 			capabilities = capabilities,
-			filetypes = { "html", "typescriptreact", "javascriptreact" },
+			cmd = { 'vscode-html-language-server', '--stdio' },
+			filetypes = { 'html' },
+			root_markers = { 'package.json', '.git' },
+			settings = {},
 			init_options = {
-				configurationSection = { "html", "css", "javascript" },
-				embeddedLanguages = { css = true, javascript = true },
 				provideFormatter = true,
+				embeddedLanguages = { css = true, javascript = true },
+				configurationSection = { 'html', 'css', 'javascript' },
 			},
-			cmd = { "/usr/bin/vscode-html-language-server", "--stdio" }
 		})
 
 		vim.lsp.config("cssls", {
 			capabilities = capabilities,
+			cmd = { "vscode-css-language-server", "--stdio" },
+			filetypes = { 'css', 'scss', 'less' },
 			init_options = { provideFormatter = true },
-			cmd = { "/usr/bin/vscode-css-language-server", "--stdio" },
-			root_dir = util.root_pattern("package.json", ".git"),
-			single_file_support = true,
+			root_markers = { 'package.json', '.git' },
+			settings = {
+				css = { validate = true },
+				scss = { validate = true },
+				less = { validate = true },
+			},
+		})
+
+		vim.lsp.config("cssmodules_ls", {
+			capabilities = capabilities,
+			cmd = { "cssmodules-language-server" },
+			filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+			root_markers = { "package.json" }
 		})
 
 		vim.lsp.config("ts_ls", {
@@ -128,7 +160,7 @@ return {
 				if not config.settings.editor then config.settings.editor = {} end
 				config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
 			end,
-			root_dir = require("lspconfig.util").root_pattern(
+			root_dir = util.root_pattern(
 				"tailwind.config.js",
 				"tailwind.config.cjs",
 				"tailwind.config.mjs",
@@ -143,17 +175,17 @@ return {
 			capabilities = capabilities,
 			cmd = { "emmet-language-server", "--stdio" },
 			filetypes = {
-				"html", "css", "scss", "javascriptreact", "typescriptreact",
-				"sass", "less", "pug", "eruby", "htmldjango", "htmlangular"
+				"astro", "css", "eruby", "html", "htmlangular", "htmldjango",
+				"javascriptreact", "less", "sass", "scss", "svelte", "typescriptreact", "vue"
 			},
-			root_dir = require("lspconfig.util").root_pattern(".git"),
+			root_markers = { ".git" }
 		})
 
 		vim.lsp.config("gopls", {
 			capabilities = capabilities,
 			cmd = { "gopls" },
 			filetypes = { "go", "gomod", "gowork", "gotmpl" },
-			root_dir = require("lspconfig.util").root_pattern("go.work", "go.mod", ".git"),
+			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 			settings = {
 				gopls = {
 					completeUnimported = true,
@@ -166,6 +198,10 @@ return {
 		})
 
 
-		vim.lsp.enable({ "html", "cssls", "ts_ls", "tailwindcss", "emmet_language_server", "gopls"})
+		vim.lsp.enable({
+			"html", "cssls", "ts_ls", "tailwindcss",
+			"emmet_language_server", "gopls", "yamlls"
+		})
+
 	end,
 }

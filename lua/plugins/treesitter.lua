@@ -27,7 +27,7 @@ return {
 				"typescript",
 				"rust",
 				"python",
-				"regex"
+				"regex",
 			},
 		})
 	end
