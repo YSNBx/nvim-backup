@@ -1,12 +1,11 @@
 return {
   "mrcjkb/rustaceanvim",
-  version = "^6",
-	lazy = false,
+  version = "^8",
+  ft = "rust",
   dependencies = {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
   },
-  ft = "rust",
   init = function()
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities(

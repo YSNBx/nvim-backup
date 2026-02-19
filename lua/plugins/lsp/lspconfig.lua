@@ -1,6 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
+	lazy = false,
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
@@ -66,23 +66,6 @@ return {
 			virtual_text = true,
 			underline = true,
 			update_in_insert = false,
-		})
-
-		vim.lsp.config("yamlls", {
-			root_dir = util.root_pattern(".git", "pom.xml", "build.gradle", "package.json", ".yamllint"),
-			settings = {
-				redhat = { telemetry = { enabled = false } },
-				yaml = {
-					format = { enable = true },
-					keyOrdering = false,
-					schemas = {
-						-- GitHub Actions example:
-						["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-						-- Spring Boot config (good enough for hints):
-						["https://json.schemastore.org/spring-boot-configuration-metadata.json"] = "application*.yml",
-					},
-				},
-			},
 		})
 
 		vim.lsp.config("html", {
@@ -197,10 +180,26 @@ return {
 			}
 		})
 
+		vim.lsp.config("yamlls", {
+			root_dir = util.root_pattern(".git", "pom.xml", "build.gradle", "package.json", ".yamllint"),
+			settings = {
+				redhat = { telemetry = { enabled = false } },
+				yaml = {
+					format = { enable = true },
+					keyOrdering = false,
+					schemas = {
+						-- GitHub Actions example:
+						["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+						-- Spring Boot config (good enough for hints):
+						["https://json.schemastore.org/spring-boot-configuration-metadata.json"] = "application*.yml",
+					},
+				},
+			},
+		})
 
 		vim.lsp.enable({
 			"html", "cssls", "ts_ls", "tailwindcss",
-			"emmet_language_server", "gopls", "yamlls"
+			"emmet_language_server", "gopls", "yamlls",
 		})
 
 	end,

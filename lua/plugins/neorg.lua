@@ -1,23 +1,25 @@
 return {
 	"nvim-neorg/neorg",
-	lazy = false,
+	ft = "norg",
 	version = "*",
 	config = function()
+		local notes_dir = vim.fn.expand("~/notes")
+
 		require("neorg").setup({
 			load = {
-				["core.dirman"] = {
-					config = {
-						workspaces = {
-							unrealize = "/home/ysn/labs/unrealize/notes"
-						},
-						default_workspace = "unrealize",
-					},
-				},
 				["core.defaults"] = {},
 				["core.concealer"] = {},
 				["core.journal"] = {},
-				["core.completion"] = { config = { engine = "nvim-cmp" } },
 				["core.integrations.nvim-cmp"] = {},
+				["core.completion"] = { config = { engine = "nvim-cmp" } },
+				["core.dirman"] = {
+					config = {
+						workspaces = {
+							notes = notes_dir,
+						},
+						default_workspace = "notes",
+					},
+				},
 			},
 		})
 	end,

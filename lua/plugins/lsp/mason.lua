@@ -1,37 +1,41 @@
 return {
-	"williamboman/mason.nvim",
-	lazy = false,
-	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-	},
-	config = function(_, opts)
-		local mason = require("mason")
-		local mason_lspconfig = require("mason-lspconfig")
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    },
+  },
 
-		local conf = vim.tbl_deep_extend("keep", opts or {}, {
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗"
-				}
-			}
-		})
+  {
+    "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+        "html",
+        "cssls",
+        "ts_ls",
+        "tailwindcss",
+        "gopls",
+      },
+    },
+  },
 
-		mason.setup(conf)
-
-		mason_lspconfig.setup({
-			ensure_installed = {
-				"lua_ls",
-				"html",
-				"cssls",
-				"ts_ls",
-				"tailwindcss",
-				-- "rust_analyzer",
-				"gopls",
-				-- "jdtls", -- Java LSP
-			},
-		})
-	end
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    cmd = { "MasonToolsInstall", "MasonToolsUpdate" },
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {},
+  },
 }

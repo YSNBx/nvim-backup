@@ -44,7 +44,12 @@ local function setup_picker_keymaps(Snacks)
 			},
 		})
 	end, "Live Grep in Git Root")
+
+	map_with_desc("n", "<leader>sh", function()
+		Snacks.notifier.show_history()
+	end, "Show Notification History")
 end
+
 
 local function setup_lazygit_keymaps(Snacks)
 	map_with_desc("n", "<leader>lg", function()
