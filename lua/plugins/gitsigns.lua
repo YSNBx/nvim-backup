@@ -25,9 +25,7 @@ return {
 			map("n", "<leader>hB", gs.toggle_current_line_blame, "Toggle line blame")
 
 			map("n", "<leader>hd", gs.diffthis, "Diff this")
-
-			-- Text object
-			map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "Gitsigns select hunk")
+			map("n", "<leader>wd", gs.toggle_word_diff, "Toggle word diff")
 		end
 	}
 }

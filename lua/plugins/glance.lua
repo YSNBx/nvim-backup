@@ -4,6 +4,7 @@ return {
     local glance = require("glance")
 
     glance.setup({
+			theme = { enable = true },
       border = {
         enable = true,
         top_char = "─",

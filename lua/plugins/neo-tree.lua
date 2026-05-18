@@ -7,6 +7,7 @@ return {
 		"MunifTanjim/nui.nvim",
 		"stevearc/dressing.nvim"
 	},
+	lazy = false,
 	config = function()
 		require("neo-tree").setup({
 			file_size = {

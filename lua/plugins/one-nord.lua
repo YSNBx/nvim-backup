@@ -7,7 +7,7 @@ return {
 				float_background = true, -- Disable setting the background color for floating windows
 				eob_lines = true, -- Hide the end-of-buffer lines
 			},
-			theme = vim.g.onenord_theme or 'dark',
+			theme = vim.g.onenord_theme or 'light',
 			borders = true, -- Split window borders
 			fade_nc = false, -- Fade non-current windows, making them more distinguishable
 			custom_highlights = {}, -- Overwrite default highlight groups

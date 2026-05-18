@@ -29,10 +29,6 @@ vim.diagnostic.config({
 	}
 })
 
-vim.opt.smartcase = true
-vim.opt.smartcase = true
-vim.opt.smartcase = true
-
 -- navigation
 vim.keymap.set('n', '<C-l>', '<C-w>l', vim.g.opts)
 vim.keymap.set('n', '<C-h>', '<C-w>h', vim.g.opts)
