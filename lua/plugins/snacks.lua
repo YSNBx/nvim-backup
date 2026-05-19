@@ -26,6 +26,14 @@ local function setup_picker_keymaps(Snacks)
 		})
 	end, "Find Files in Git Root")
 
+	map_with_desc( "n", "<leader>fl", function ()
+		Snacks.picker.lines()
+	end, "Fuzzy search lines in current buffer")
+
+	map_with_desc({ "n", "v" }, "<leader>gw", function()
+		Snacks.picker.grep_word()
+	end, "Visual selection or word")
+
 	map_with_desc("n", "<leader>fg", function()
 		Snacks.picker.grep({
 			cmd = "rg",
@@ -44,6 +52,7 @@ local function setup_picker_keymaps(Snacks)
 	map_with_desc("n", "<leader>sh", function()
 		Snacks.notifier.show_history()
 	end, "Show Notification History")
+
 	map_with_desc({ "n", "v" }, "<leader>fb", function()
 		Snacks.picker.buffers({ current = false, sort_lastused = true, })
 	end, "Buffer Fuzzy Finder")
